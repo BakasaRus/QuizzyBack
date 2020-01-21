@@ -37,7 +37,7 @@ class TestController extends Controller
         ]);
 
         Auth::user()->authored_tests()->create($validated);
-        $questions = collect(json_decode($validated['questions'], true));
+        $questions = collect($validated['questions']);
         $questions->transform(function ($item) {
             return Question::create($item);
         });
