@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function authored_tests()
     {
-        return $this->hasMany(Test::class);
+        return $this->hasMany(Test::class, 'author_id');
     }
 
     public function tests()
