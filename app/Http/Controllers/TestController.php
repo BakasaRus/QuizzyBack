@@ -36,11 +36,9 @@ class TestController extends Controller
             'questions' => 'required|array'
         ]);
 
-        Auth::user()->authored_tests()->create($validated);
+        $test = Auth::user()->authored_tests()->create($validated);
         $questions = collect($validated['questions']);
-        $questions->transform(function ($item) {
-            return Question::create($item);
-        });
+        $test->questions()->createMany($questions);
 
         return response('', Response::HTTP_CREATED);
     }

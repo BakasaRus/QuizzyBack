@@ -18,8 +18,14 @@ class CreateQuestionsTable extends Migration
             $table->string('title');
             $table->json('answers');
             $table->string('correct_answer');
+            $table->unsignedBigInteger('test_id');
             $table->unsignedInteger('points');
             $table->timestamps();
+
+            $table->foreign('test_id')
+                ->references('id')
+                ->on('tests')
+                ->onDelete('cascade');
         });
     }
 
@@ -30,6 +36,9 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
+        Schema::table('tests', function (Blueprint $table) {
+            $table->dropForeign(['test_id']);
+        });
         Schema::dropIfExists('questions');
     }
 }
