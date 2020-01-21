@@ -44,11 +44,15 @@ class User extends Authenticatable
 
     public function tests()
     {
-        return $this->belongsToMany(Test::class)->using(UserTest::class);
+        return $this->belongsToMany(Test::class, 'user_test')
+                    ->using(UserTest::class)
+                    ->withPivot(['score']);
     }
 
     public function answers()
     {
-        return $this->belongsToMany(Question::class)->using(UserQuestion::class);
+        return $this->belongsToMany(Question::class, 'user_question')
+                    ->using(UserQuestion::class)
+                    ->withPivot(['answer', 'is_correct']);
     }
 }

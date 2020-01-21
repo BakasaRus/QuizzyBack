@@ -15,7 +15,9 @@ class Test extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class)->using(UserTest::class);
+        return $this->belongsToMany(User::class, 'user_test')
+                    ->using(UserTest::class)
+                    ->withPivot(['score']);
     }
 
     public function questions()

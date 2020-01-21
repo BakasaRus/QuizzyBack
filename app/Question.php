@@ -19,6 +19,8 @@ class Question extends Model
 
     public function answered_users()
     {
-        return $this->belongsToMany(User::class)->using(UserQuestion::class);
+        return $this->belongsToMany(User::class, 'user_question')
+                    ->using(UserQuestion::class)
+                    ->withPivot(['answer', 'is_correct']);
     }
 }
