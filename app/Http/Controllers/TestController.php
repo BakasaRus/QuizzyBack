@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class TestController extends Controller
 {
@@ -35,7 +36,7 @@ class TestController extends Controller
             'questions' => 'required|array'
         ]);
 
-        Test::create($validated);
+        Auth::user()->authored_tests()->create($validated);
         $questions = collect(json_decode($validated['questions'], true));
         $questions->transform(function ($item) {
             return Question::create($item);
