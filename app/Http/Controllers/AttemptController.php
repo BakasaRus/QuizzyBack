@@ -41,10 +41,16 @@ class AttemptController extends Controller
                     'is_correct' => true
                 ]);
                 return $total + $question->points;
+            } else {
+                $user->answers()->attach($item['id'], [
+                    'answer' => $user_answer,
+                    'is_correct' => false
+                ]);
+                return $total;
             }
-        });
+        }, 0);
 
-        $test->users()->create([
+        $test->users()->attach($user->id, [
             'score' => $score
         ]);
 
