@@ -3,10 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Test extends Model
 {
     protected $fillable = ['title', 'description'];
+
+    protected $appends = ['info'];
 
     public function author()
     {
@@ -23,5 +26,10 @@ class Test extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    public function getInfoAttribute()
+    {
+        return UserTest::whereTestId($this->id)->where('user_id', Auth::id())->first();
     }
 }
